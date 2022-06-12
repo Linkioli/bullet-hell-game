@@ -1,28 +1,27 @@
 import pygame
+import gametools
 from sys import exit
 
 class Player(pygame.sprite.Sprite):
     '''The Main player class'''
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load('sprites/player/player.png').convert_alpha()
-        self.image = pygame.transform.scale2x(self.image)
+        self.player_image = pygame.image.load('sprites/player/player.png').convert_alpha()
+        self.image = gametools.smoothscale2x(self.player_image)
         self.rect = self.image.get_rect(center = (400, 500))
+
 
     def player_input(self):
         keys = pygame.key.get_pressed()
         # player movement
-        if keys[pygame.K_UP]:
-            self.rect.y -= 5
-        if keys[pygame.K_DOWN]:
-            self.rect.y += 5
-        if keys[pygame.K_LEFT]:
-            self.rect.x -= 5
-        if keys[pygame.K_RIGHT]:
-            self.rect.x += 5
+        if keys[pygame.K_UP]: self.rect.y -= 5
+        if keys[pygame.K_DOWN]: self.rect.y += 5
+        if keys[pygame.K_LEFT]: self.rect.x -= 5
+        if keys[pygame.K_RIGHT]: self.rect.x += 5
 
     def update(self):
         self.player_input()
+
 
 
 # initilaization
