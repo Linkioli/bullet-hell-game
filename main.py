@@ -30,6 +30,14 @@ class Player(pygame.sprite.Sprite):
         else:
             self.vector.x = 0
 
+    def animation_state(self):
+        if self.vector.x == -1:
+            self.image = gametools.smoothscale2x(pygame.image.load('sprites/player/player-left.png').convert_alpha())
+        elif self.vector.x == 1:
+            self.image = gametools.smoothscale2x(pygame.image.load('sprites/player/player-right.png').convert_alpha())
+        else:
+            self.image = gametools.smoothscale2x(pygame.image.load('sprites/player/player.png').convert_alpha())
+
     def move(self, velocity):
         if self.vector.magnitude() != 0:
             self.vector = self.vector.normalize()
@@ -37,6 +45,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.player_input()
+        self.animation_state()
         self.move(self.velocity)
 
 
