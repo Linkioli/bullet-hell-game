@@ -10,17 +10,34 @@ class Player(pygame.sprite.Sprite):
         self.image = gametools.smoothscale2x(self.player_image)
         self.rect = self.image.get_rect(center = (400, 500))
 
+        self.vector = pygame.math.Vector2()
+        self.velocity = 5
 
     def player_input(self):
         keys = pygame.key.get_pressed()
         # player movement
-        if keys[pygame.K_UP]: self.rect.y -= 5
-        if keys[pygame.K_DOWN]: self.rect.y += 5
-        if keys[pygame.K_LEFT]: self.rect.x -= 5
-        if keys[pygame.K_RIGHT]: self.rect.x += 5
+        if keys[pygame.K_UP]:
+            self.vector.y = -1
+        elif keys[pygame.K_DOWN]:
+            self.vector.y = 1
+        else:
+            self.vector.y = 0
+
+        if keys[pygame.K_LEFT]:
+            self.vector.x = -1
+        elif keys[pygame.K_RIGHT]:
+            self.vector.x = 1
+        else:
+            self.vector.x = 0
+
+    def move(self, velocity):
+        if self.vector.magnitude() != 0:
+            self.vector = self.vector.normalize()
+        self.rect.center += self.vector * velocity
 
     def update(self):
         self.player_input()
+        self.move(self.velocity)
 
 
 
