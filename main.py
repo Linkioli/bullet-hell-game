@@ -14,6 +14,7 @@ clock = pygame.time.Clock()
 # Player
 player = pygame.sprite.GroupSingle()
 player.add(players.Player())
+x = pygame.sprite.GroupSingle()
 
 # Background
 back_surf = pygame.image.load('sprites/backgrounds/background.png').convert()
@@ -31,7 +32,7 @@ while True:
     screen.blit(back_surf, (0, 0))
 
     player.draw(screen)
-    player.update()
+    player.update(screen)
 
     pygame.display.update()
     clock.tick(60)
