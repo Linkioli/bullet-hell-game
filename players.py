@@ -3,7 +3,7 @@ import gametools
 
 
 
-class PlayerAttack:
+class Bullet:
     def __init__(self, x, y, screen):
         self.x = x
         self.y = y
@@ -39,6 +39,20 @@ class Player(pygame.sprite.Sprite):
         self.vector = pygame.math.Vector2()
         self.velocity = 5
 
+        self.bullet_buffer = 0
+
+
+    def attack(self, type, screen):
+
+        # normal attack
+        if type == 'normal':
+            bullet_freq = 1
+            self.bullet_buffer += 1
+            if self.bullet_buffer == bullet_freq:
+                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, screen))
+            if self.bullet_buffer > bullet_freq:
+                self.bullet_buffer = 0
+
 
     def player_input(self, screen):
         keys = pygame.key.get_pressed()
@@ -58,12 +72,13 @@ class Player(pygame.sprite.Sprite):
             self.vector.x = 0
 
         if keys[pygame.K_x]:
-            self.bullets.append(PlayerAttack(self.rect.centerx, self.rect.top, screen))
+            self.attack('normal', screen)
 
-    def attack(self):
+
+    def fire(self):
         for i in self.bullets:
             i.update()
-            if i.y < 0:
+            if i.y < -50:
                 self.bullets.remove(i)
 
         for i in self.bullets:
@@ -93,5 +108,5 @@ class Player(pygame.sprite.Sprite):
         self.player_input(screen)
         self.animation_state()
         self.move(self.velocity)
-        self.attack()
+        self.fire()
 
