@@ -103,6 +103,12 @@ class Player(pygame.sprite.Sprite):
             self.vector = self.vector.normalize()
         self.rect.center += self.vector * velocity
 
+        # screen border collision
+        if self.rect.left < 0: self.rect.left = 0
+        if self.rect.top < 0: self.rect.top = 0
+        if self.rect.right > 800: self.rect.right = 800
+        if self.rect.bottom > 600: self.rect.bottom = 600
+
 
     def update(self, screen):
         self.player_input(screen)
