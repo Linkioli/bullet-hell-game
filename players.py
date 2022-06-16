@@ -4,12 +4,12 @@ import gametools
 
 
 class Bullet:
-    def __init__(self, x, y, screen):
+    def __init__(self, x, y, speed, screen, sprite):
         self.x = x
         self.y = y
         self.screen = screen
-        self.velocity = 20
-        self.image = gametools.smoothscale2x(pygame.image.load('sprites/player/player-bullet.png')).convert_alpha()
+        self.velocity = speed
+        self.image = gametools.smoothscale2x(pygame.image.load(sprite)).convert_alpha()
         self.rect = self.image.get_rect(center = (x, y))
 
 
@@ -47,9 +47,19 @@ class Player(pygame.sprite.Sprite):
         # normal attack
         if type == 'normal':
             bullet_freq = 1
+            bullet_speed = 20
             self.bullet_buffer += 1
             if self.bullet_buffer == bullet_freq:
-                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, screen))
+                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, bullet_speed, screen, sprite='sprites/player/player-bullet.png'))
+            if self.bullet_buffer > bullet_freq:
+                self.bullet_buffer = 0
+
+        if type == 'missile':
+            bullet_freq = 20
+            bullet_speed = 8
+            self.bullet_buffer += 1
+            if self.bullet_buffer == bullet_freq:
+                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, bullet_speed, screen, sprite='sprites/player/missile.png'))
             if self.bullet_buffer > bullet_freq:
                 self.bullet_buffer = 0
 
@@ -72,6 +82,8 @@ class Player(pygame.sprite.Sprite):
             self.vector.x = 0
 
         if keys[pygame.K_x]:
+            self.attack('missile', screen)
+        if keys[pygame.K_c]:
             self.attack('normal', screen)
 
 
@@ -86,6 +98,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def animation_state(self):
+        # changes the animation state of the player based on what direction they're moving
         if self.vector.x == -1:
             self.player_index -= 0.1
         elif self.vector.x == 1:

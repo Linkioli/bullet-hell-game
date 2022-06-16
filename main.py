@@ -1,6 +1,7 @@
 import pygame
 import gametools
 import players
+import enemies
 from sys import exit
 
 
@@ -14,7 +15,8 @@ clock = pygame.time.Clock()
 # Player
 player = pygame.sprite.GroupSingle()
 player.add(players.Player())
-x = pygame.sprite.GroupSingle()
+enemy = pygame.sprite.GroupSingle()
+enemy.add(enemies.Enemy())
 
 # Background
 back_surf = pygame.image.load('sprites/backgrounds/background.png').convert()
@@ -33,6 +35,8 @@ while True:
 
     player.draw(screen)
     player.update(screen)
+
+    enemy.draw(screen)
 
     pygame.display.update()
     clock.tick(60)
