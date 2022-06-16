@@ -37,6 +37,7 @@ while True:
     player.update(screen)
 
     enemy.draw(screen)
+    enemy.update()
 
     pygame.display.update()
     clock.tick(60)
