@@ -23,10 +23,9 @@ class Bullet:
 
 
 
-class Player(pygame.sprite.Sprite):
+class Player():
     '''The Main player class'''
     def __init__(self):
-        super().__init__()
         self.player_image_center = gametools.smoothscale2x(pygame.image.load('sprites/player/player.png')).convert_alpha()
         self.player_image_left = gametools.smoothscale2x(pygame.image.load('sprites/player/player-left.png')).convert_alpha()
         self.player_image_right = gametools.smoothscale2x(pygame.image.load('sprites/player/player-right.png')).convert_alpha()
@@ -40,6 +39,7 @@ class Player(pygame.sprite.Sprite):
         self.velocity = 5
 
         self.bullet_buffer = 0
+        self.current_bullet = None
 
 
     def attack(self, type, screen):
@@ -95,7 +95,7 @@ class Player(pygame.sprite.Sprite):
 
         for i in self.bullets:
             i.draw()
-
+            self.current_bullet = i
 
     def animation_state(self):
         # changes the animation state of the player based on what direction they're moving
@@ -122,6 +122,8 @@ class Player(pygame.sprite.Sprite):
         if self.rect.right > 800: self.rect.right = 800
         if self.rect.bottom > 600: self.rect.bottom = 600
 
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)
 
     def update(self, screen):
         self.player_input(screen)

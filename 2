@@ -38,7 +38,7 @@ while True:
     enemy.update()
 
     try:
-        enemy.collision(enemy, player.current_bullet)
+        enemy.collision(enemy, player.bullets)
     except:
         pass
 
