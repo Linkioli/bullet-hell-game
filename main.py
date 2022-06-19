@@ -37,10 +37,7 @@ while True:
     enemy.draw(screen)
     enemy.update()
 
-    try:
-        enemy.collision(enemy, player.current_bullet)
-    except:
-        pass
+    enemy.collision(enemy.rect, player.bullets)
 
     pygame.display.update()
     clock.tick(60)

@@ -15,8 +15,9 @@ class Enemy():
 
     def collision(self, sprite1, sprite2):
         # detect collions
-        collide = sprite1.rect.colliderect(sprite2.rect)
-        if collide: print("collision")
+        collide = sprite1.collidelist(sprite2)
+        if collide != -1:
+            print("collision")
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
