@@ -5,7 +5,7 @@ class Enemy():
     def __init__(self):
         self.image = gametools.smoothscale2x(pygame.image.load('sprites/enemies/enemy.png'))
         self.rect = self.image.get_rect(center = (400, 100))
-        self.velocity = 5
+        self.velocity = 3
 
     def move(self):
         # move back and forth
