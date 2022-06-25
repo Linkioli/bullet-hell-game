@@ -19,14 +19,19 @@ enemy = enemies.Enemy()
 # Background
 back_surf = pygame.image.load('sprites/backgrounds/background.png').convert()
 
+enemy_fire = pygame.USEREVENT + 1
+
 # main game loop
 while True:
 
+    pygame.time.set_timer(enemy_fire, 10)
     # event loop
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+        if event.type == enemy_fire:
+            enemy.attack(screen)
 
     # display background
     screen.blit(back_surf, (0, 0))
