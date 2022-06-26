@@ -56,4 +56,5 @@ class Enemy():
 
     def update(self):
         self.move()
+        self.fire()
 
