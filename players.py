@@ -54,6 +54,7 @@ class Player():
             if self.bullet_buffer > bullet_freq:
                 self.bullet_buffer = 0
 
+
         if type == 'missile':
             bullet_freq = 20
             bullet_speed = 8
@@ -97,6 +98,7 @@ class Player():
             i.draw()
             self.current_bullet = i
 
+
     def animation_state(self):
         # changes the animation state of the player based on what direction they're moving
         if self.vector.x == -1:
@@ -111,6 +113,13 @@ class Player():
         self.image = self.player_image[int(self.player_index)]
 
 
+    def collision(self, sprite1, sprite2):
+        # detect collions
+        collide = sprite1.collidelist(sprite2)
+        if collide != -1:
+            print("collision")
+
+
     def move(self, velocity):
         if self.vector.magnitude() != 0:
             self.vector = self.vector.normalize()
@@ -122,8 +131,10 @@ class Player():
         if self.rect.right > 800: self.rect.right = 800
         if self.rect.bottom > 600: self.rect.bottom = 600
 
+
     def draw(self, surface):
         surface.blit(self.image, self.rect)
+
 
     def update(self, screen):
         self.player_input(screen)

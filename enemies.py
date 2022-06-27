@@ -32,15 +32,18 @@ class Enemy():
         if self.rect.left <= 0: self.velocity = 5
         self.rect.x += self.velocity
 
+
     def collision(self, sprite1, sprite2):
         # detect collions
         collide = sprite1.collidelist(sprite2)
         if collide != -1:
             print("collision")
 
+
     def attack(self, screen):
         # time when bullets are loaded into list
         self.bullets.append(Projectile(x = self.rect.centerx, y = self.rect.bottom, velocity = 10, screen = screen))
+
 
     def fire(self):
         for i in self.bullets:
@@ -51,8 +54,10 @@ class Enemy():
         for i in self.bullets:
             i.draw()
 
+
     def draw(self, surface):
         surface.blit(self.image, self.rect)
+
 
     def update(self):
         self.move()

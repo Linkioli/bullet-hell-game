@@ -44,6 +44,7 @@ while True:
     enemy.update()
 
     enemy.collision(enemy.rect, player.bullets)
+    player.collision(player.rect, enemy.bullets)
 
     pygame.display.update()
     clock.tick(60)
