@@ -46,8 +46,8 @@ class Player():
 
         # normal attack
         if type == 'normal':
-            bullet_freq = 1
-            bullet_speed = 20
+            bullet_freq = 10
+            bullet_speed = 15
             self.bullet_buffer += 1
             if self.bullet_buffer == bullet_freq:
                 self.bullets.append(Bullet(self.rect.centerx, self.rect.top, bullet_speed, screen, sprite='sprites/player/player-bullet.png'))
