@@ -31,20 +31,21 @@ while True:
             pygame.quit()
             exit()
         if event.type == enemy_fire:
-            print('fire')
             enemy.attack(screen)
 
     # display background
     screen.blit(back_surf, (0, 0))
 
-    player.draw(screen)
-    player.update(screen)
+    if player.collision(player.rect, enemy.bullets) != 0:
+        player.draw(screen)
+        player.update(screen)
+    else:
+        print("dead lol")
+        exit()
 
-    enemy.draw(screen)
-    enemy.update()
-
-    enemy.collision(enemy.rect, player.bullets)
-    player.collision(player.rect, enemy.bullets)
+    if enemy.collision(enemy.rect, player.bullets) != 0:
+        enemy.draw(screen)
+        enemy.update()
 
     pygame.display.update()
     clock.tick(60)

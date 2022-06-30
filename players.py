@@ -4,11 +4,12 @@ import gametools
 
 
 class Bullet:
-    def __init__(self, x, y, speed, screen, sprite):
+    def __init__(self, x, y, speed, damage, screen, sprite):
         self.x = x
         self.y = y
         self.screen = screen
         self.velocity = speed
+        self.damage = damage
         self.image = gametools.smoothscale2x(pygame.image.load(sprite)).convert_alpha()
         self.rect = self.image.get_rect(center = (x, y))
 
@@ -38,6 +39,8 @@ class Player():
         self.vector = pygame.math.Vector2()
         self.velocity = 5
 
+        self.health = 200
+
         self.bullet_buffer = 0
         self.current_bullet = None
 
@@ -48,9 +51,10 @@ class Player():
         if type == 'normal':
             bullet_freq = 10
             bullet_speed = 15
+            bullet_damage = 5
             self.bullet_buffer += 1
             if self.bullet_buffer == bullet_freq:
-                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, bullet_speed, screen, sprite='sprites/player/player-bullet.png'))
+                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, bullet_speed, bullet_damage, screen, sprite='sprites/player/player-bullet.png'))
             if self.bullet_buffer > bullet_freq:
                 self.bullet_buffer = 0
 
@@ -58,9 +62,10 @@ class Player():
         if type == 'missile':
             bullet_freq = 20
             bullet_speed = 8
+            bullet_damage = 25
             self.bullet_buffer += 1
             if self.bullet_buffer == bullet_freq:
-                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, bullet_speed, screen, sprite='sprites/player/missile.png'))
+                self.bullets.append(Bullet(self.rect.centerx, self.rect.top, bullet_speed, bullet_damage, screen, sprite='sprites/player/missile.png'))
             if self.bullet_buffer > bullet_freq:
                 self.bullet_buffer = 0
 
@@ -115,9 +120,12 @@ class Player():
 
     def collision(self, sprite1, sprite2):
         # detect collions
-        collide = sprite1.collidelist(sprite2)
-        if collide != -1:
-            print("collision")
+        index = sprite1.collidelist(sprite2)
+        if index != -1:
+            self.health -= sprite2[index].damage
+            print(f'Player Health: {self.health}')
+        if self.health <= 0:
+            return 0
 
 
     def move(self, velocity):

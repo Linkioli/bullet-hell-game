@@ -2,11 +2,12 @@ import pygame
 import gametools
 
 class Projectile():
-    def __init__(self, x, y, velocity, screen):
+    def __init__(self, x, y, velocity, damage, screen):
         self.x = x
         self.y = y
         self.screen = screen
         self.velocity = velocity
+        self.damage = damage
         self.image = gametools.smoothscale2x(pygame.image.load('sprites/enemies/projectile.png')).convert_alpha()
         self.rect = self.image.get_rect(center = (x, y))
 
@@ -36,14 +37,17 @@ class Enemy():
 
     def collision(self, sprite1, sprite2):
         # detect collions
-        collide = sprite1.collidelist(sprite2)
-        if collide != -1:
-            print("enemy collision")
+        index = sprite1.collidelist(sprite2)
+        if index != -1:
+            self.health -= sprite2[index].damage
+            print(f'Enemy Health: {self.health}')
+        if self.health <= 0:
+            return 0
 
 
     def attack(self, screen):
         # time when bullets are loaded into list
-        self.bullets.append(Projectile(x = self.rect.centerx, y = self.rect.bottom, velocity = 10, screen = screen))
+        self.bullets.append(Projectile(x = self.rect.centerx, y = self.rect.bottom, velocity = 10, damage = 10, screen = screen))
 
 
     def fire(self):
