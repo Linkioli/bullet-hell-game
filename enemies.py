@@ -25,6 +25,7 @@ class Enemy():
         self.rect = self.image.get_rect(center = (400, 100))
         self.velocity = 3
         self.bullets = []
+        self.health = 50
 
     def move(self):
         # move back and forth
@@ -37,7 +38,7 @@ class Enemy():
         # detect collions
         collide = sprite1.collidelist(sprite2)
         if collide != -1:
-            print("collision")
+            print("enemy collision")
 
 
     def attack(self, screen):
